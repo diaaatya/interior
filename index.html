@@ -168,41 +168,33 @@
                 <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
                 <button type="submit">Send Message</button>
             </form>
+        </div>  
+            </div>
+            <div class="contact-info">
+                <p>Refae Bahrain</p>
+                <p>Email: ivy.interiors.s@gmail.com</p>
+                <p>Phone: +97333162244</p>
+            </div>
         </div>
-<?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require 'vendor/autoload.php';
-
+    </section>
+</body>
+</html><?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
     $message = htmlspecialchars($_POST['message']);
 
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.example.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'your_email@example.com';
-        $mail->Password = 'your_email_password';
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+    $to = "m_raouf_7@hotmail.com";
+    $subject = "Contact Form Submission from $name";
+    $body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
+    $headers = "From: $email\r\nReply-To: $email\r\n";
 
-        $mail->setFrom($email, $name);
-        $mail->addAddress('m_raouf_7@hotmail.com');
-
-        $mail->isHTML(false);
-        $mail->Subject = "Contact Form Submission from $name";
-        $mail->Body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
-
-        $mail->send();
-        echo 'Message sent successfully!';
-    } catch (Exception $e) {
-        echo "Failed to send message. Mailer Error: {$mail->ErrorInfo}";
+    if (mail($to, $subject, $body, $headers)) {
+        echo "Message sent successfully!";
+    } else {
+        echo "Failed to send message.";
     }
 } else {
-    echo "Invalid request method.";
+    echo "Invalid request method. Please use the form to submit data.";
 }
 ?>
