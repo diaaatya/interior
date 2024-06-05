@@ -1,18 +1,20 @@
-<section id="contact" class="contact">
-    <div class="container">
-        <h2>Contact Us</h2>
-        <div class="contact-form">
-            <form action="send_mail.php" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
-        <div class="contact-info">
-            <p>123 Main Street, City, Country</p>
-            <p>Email: info@example.com</p>
-            <p>Phone: +1 234 567 890</p>
-        </div>
-    </div>
-</section>
+<?php
+if ($_SERVER["REQUEST_METHOD"] = "POST") {
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $message = htmlspecialchars($_POST['message']);
+
+    $to = "ivy.interiors.s@gmail.com";
+    $subject = "Contact Form Submission from $name";
+    $body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
+    $headers = "From: $email\r\nReply-To: $email\r\n";
+
+    if (mail($to, $subject, $body, $headers)) {
+        echo "Message sent successfully!";
+    } else {
+        echo "Failed to send message.";
+    }
+} else {
+    echo "Invalid request method.";
+}
+?>
