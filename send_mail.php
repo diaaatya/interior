@@ -1,4 +1,7 @@
 <?php
+// Log request method
+error_log("Request method: " . $_SERVER["REQUEST_METHOD"]);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize form inputs
     $name = htmlspecialchars(trim($_POST['name']));
